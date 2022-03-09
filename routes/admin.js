@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express')
 const router = express.Router()
 const path = require('path')
@@ -14,8 +15,12 @@ router.get('/posts', (require, response) => {
     response.send('Minha pagina de posts')
 })
 
-router.get('/categoria', (require, response) => {
-    response.send('Minha pagina de categorias')
+router.get('/categorias', (require, response) => {
+    response.render('admin/categorias')
+})
+
+router.get('/categorias/add', (require, response) => {
+    response.render('admin/addcategorias')
 })
 
 module.exports = router
