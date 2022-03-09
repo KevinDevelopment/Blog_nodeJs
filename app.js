@@ -13,10 +13,12 @@ const path = require('path')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-//Hnadlebars
-const hbs = handlebars.create({defaultLayout: 'main'})
-app.engine('handlebars', () => hbs)
-app.set('view engine', 'handlebars');
+//Handlebars
+
+app.engine('handlebars', handlebars.engine())
+app.set('view engine', 'handlebars')
+app.set('views', __dirname + '/views');
+
 
 
 //mongoose
