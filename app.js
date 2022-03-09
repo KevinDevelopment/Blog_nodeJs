@@ -1,10 +1,11 @@
-//carrgando módulos
+//carregando módulos
 const express = require('express')
 const app = express()
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const { handle } = require('express/lib/application')
 const mongoose = ('mongoose')
+const admin = require('./routes/admin')
+const path = require('path')
 
 //configurações
 
@@ -15,11 +16,17 @@ app.use(bodyParser.json())
 //Hnadlebars
 const hbs = handlebars.create({defaultLayout: 'main'})
 app.engine('handlebars', () => hbs)
+app.set('view engine', 'handlebars');
+
 
 //mongoose
 
+//public 
+app.use(express.static(path.join(__dirname, 'public')))
+
 
 //Rotas
+app.use('/admin', admin)
 
 //Outros
 
