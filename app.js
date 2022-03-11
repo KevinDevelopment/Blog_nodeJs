@@ -1,13 +1,31 @@
 //carregando módulos
-const express = require('express')
-const app = express()
-const handlebars = require('express-handlebars')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const admin = require('./routes/admin')
-const path = require('path')
+const express = require('express');
+const app = express();
+const handlebars = require('express-handlebars');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const admin = require('./routes/admin');
+const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
+
 
 //configurações
+
+//configurando sessão
+app.use(session({
+    secret: "qwert12345",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
+
+//configuração middleaware
+app.use((require, response, next) => {
+    response.locals.success_msg = require.flash("success_msg");
+    response.locals.error_msg = require.flash("error_msg")
+    next()
+});
 
 //Body Parser
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -28,6 +46,13 @@ mongoose.connect("mongodb://localhost/blogapp").then(() => {
 
 //public 
 app.use(express.static(path.join(__dirname, 'public')))
+
+//configurando o middleware(espião)
+app.use((require, response, next) => {
+    console.log("eu sou um middleware")
+    next();
+})
+
 
 
 //Rotas

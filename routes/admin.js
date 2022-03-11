@@ -22,6 +22,22 @@ router.get('/categorias', (require, response) => {
 })
 
 router.post('/categorias/nova', (require, response) => {
+
+    var erros = []
+
+    if (!require.body.nome || typeof require.body.nome == undefined || require.body.nome == null) {
+        erros.push({ texto: "Nome Inválido" })
+    }
+
+    if (!require.body.slug || typeof require.body.slug == undefined || require.body.slug == null) {
+        erros.push({ texto: "Slug Inválido" })
+    }
+
+    if(require.body.nome.length < 2){
+        erros.push({texto: "Digir"})
+    }
+
+
     const novaCategoria = {
         nome: require.body.nome,
         slug: require.body.slug
