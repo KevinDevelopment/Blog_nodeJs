@@ -49,8 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //configurando o middleware(espião)
 app.use((require, response, next) => {
-    console.log("eu sou um middleware")
-    next();
+        next();
 })
 
 
